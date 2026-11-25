@@ -1,0 +1,10 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "groupings": [
+    {
+      "title": "Build and run in1s websites",
+      "description": "Use both together with the in1s MCP server: one for content, publishing and the site's operations, one for how the site looks and its Liquid theme code.",
+      "skills": ["in1s", "in1s-theme-development"]
+    }
+  ]
+}

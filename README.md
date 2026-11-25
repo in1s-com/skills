@@ -1,5 +1,7 @@
 # in1s skills
 
+[![skills.sh](https://skills.sh/b/in1s-com/skills)](https://skills.sh/in1s-com/skills)
+
 Agent Skills for building and running websites on [in1s](https://in1s.com) with an AI agent, through the in1s MCP
 server.
 
