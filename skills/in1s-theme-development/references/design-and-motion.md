@@ -110,6 +110,89 @@ clip), and do not split Arabic or other joined scripts into letters.
 Smooth-scroll libraries change how wheel scrolling feels and how anchors jump. Use one only when the person wants that
 feel, skip it for touch devices and reduced motion, and keep `scroll-padding-top` for a sticky header.
 
+### How each pattern works
+
+One small theme script drives them all: it finds elements by `data-*` attributes (never by styling classes), sets
+everything up once on load, and again on `in1s:section:load` for the re-rendered section only. In the editor it shows
+the end state at once instead of animating. Write each pattern so that the page reads correctly when the script never
+runs.
+
+- **Reveal on view.** One `IntersectionObserver` for the whole page adds `is-in` to each target as it enters (a
+  threshold around 0.1 and a bottom margin of about −10%, so it starts a little after the edge), then stops watching
+  it: a reveal plays once. Stagger siblings with a CSS custom property per item (`--i`) multiplied into
+  `transition-delay`, not with timers. Add a safety net: a couple of seconds after load, mark as shown anything already
+  on screen that the observer missed.
+- **Word-by-word heading.** The script wraps each word in a span carrying its index, and CSS delays each by
+  index × 70–80ms, from a small blur and rise. Split only text nodes; leave a child marked "do not split" or
+  `aria-hidden` whole (it counts as one word). Splitting happens after the page renders, so the printed setting and its
+  `data-setting-id` stay on the heading itself. Don't split joined scripts such as Arabic into letters; whole words
+  are fine. A long paragraph of blurred words is costly: keep it to headings.
+- **Highlighted words.** An accent phrase (a heading setting's second part) sits in a span with a background that
+  wipes in from the start side (`transform-origin` follows `dir`) once revealed. A decorative copy of the text used for
+  the effect is `aria-hidden`.
+- **Header that becomes a pill.** The engine wraps the header section in a wrapper exactly its height, so make the
+  **wrapper** sticky (schema `class`, or `:has()` on the header inside it), and make the wrapper's own background
+  transparent, or a strip of the page colour shows behind the floating pill. Past about 40px of scroll, a class on the
+  header narrows it to a rounded, translucent bar with `backdrop-filter: blur()`, a hairline border and a soft shadow.
+  Animate width, radius and padding with the shared easing. Give `html` a `scroll-padding-top` the bar's height so
+  anchor links don't land under it.
+- **Rolling button label.** The button holds its label twice, stacked in a clipped line; on hover both move up one
+  line, and an arrow slides out as its copy slides in. The copy is `aria-hidden`. Under reduced motion it only changes
+  colour.
+- **Counting or rolling numbers.** Only for real figures, never for years. The script keeps the real text as the
+  element's `aria-label` and replaces each digit with a column of 0–9 that slides to its digit; other characters stay
+  as they are. Use tabular figures (`font-variant-numeric: tabular-nums`) so widths don't jump.
+- **Scrolling band (ticker, logos).** The track holds the list twice and moves by exactly half its width in a linear,
+  infinite CSS animation, so the loop is seamless; speed is a setting. Fade the edges with a `mask-image` gradient,
+  pause on hover and focus, reverse the direction under `dir="rtl"`, and stop it under reduced motion (the list then
+  wraps or scrolls by hand). Mark the duplicate copy `aria-hidden`.
+- **Statement that fills in as you scroll.** Words start at about 16% opacity, and on scroll the script sets each
+  word's opacity from how far the block has travelled through the viewport, so reading and scrolling move together.
+  Without motion, every word is at full opacity.
+- **Sticky stacking cards.** Each card is `position: sticky` with a `top` that grows a little per card (`--i`), so
+  they pile up as the page scrolls; a slight scale-down on the covered card adds depth. Pure CSS; on phones, a smaller
+  offset or a plain list.
+- **Framed image cards.** The image sits in a rounded frame with `overflow: hidden` and zooms a few percent on hover
+  while the frame stays still; an arrow on the card moves toward the reading direction.
+- **Footer wordmark.** The brand name set very large (`clamp()` against the viewport width) as the footer's last line.
+  Check that it neither overflows nor gets clipped at 390px and in the longest language.
+- **Smooth inertial scrolling** (optional, for example Lenis): start it only for a fine pointer with motion allowed,
+  never in the editor, and route same-page anchor clicks through it with the header's height as the offset.
+
+### The small things that make it feel finished
+
+Hairline dividers instead of borders; one radius scale; numbered items (01, 02 …) and small mono labels with a marker
+before section headings; `text-wrap: balance` on headings; tabular figures in numbers; arrows that point the reading
+direction (flipped under `rtl`); images with a fixed `aspect-ratio`, so nothing jumps as they load; one focus style
+everywhere; links whose hover is a colour or underline change, not a size change.
+
+Mistakes seen in a real build, each invisible to `render_page`:
+
+- a strip of the page colour behind the floating header;
+- a call-to-action label at heading size that wrapped on phones;
+- a footer wordmark cropped at the bottom;
+- a stray line in the phone-menu icon;
+- menu labels wrapping onto two lines at tablet width;
+- headings printed as `<div>`, because a snippet read a variable meant for another section.
+
+Look for each one in the browser check.
+
+## Studying reference sites
+
+When the person gives you sites to match, study each one before designing, page by page:
+
+- **Structure:** the sections in order, the layout grid, the container width, how the header and footer behave.
+- **Type:** the families, and the sizes, weights, line-heights and letter-spacing of the main heading, the section
+  headings, the body text and the labels (read them from computed styles, not by eye).
+- **Colour:** the page background, card surfaces, text and muted text, the accent and where it appears.
+- **Motion:** what moves on load, on scroll and on hover; from where, how far, how long, with what easing, and what
+  triggers it. Scroll the page with real wheel events while sampling the styles that change: `transform`, `opacity`,
+  `filter`, `clip-path`.
+- **The small details:** labels, numbering, dividers, hover states, focus styles.
+
+Then tell the person which patterns you will use and which you will leave out, and why. Match the feel, not the
+content, and never copy another site's text, images or logo.
+
 ## 4. Accessibility (WCAG 2.2 AA)
 
 - **Contrast**: 4.5:1 for body text, 3:1 for large text and for controls. Check text over photos and on the accent

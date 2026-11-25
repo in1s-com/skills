@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1 — 2026-11-25
+
+- design-and-motion.md: how each modern pattern works (reveal on view, word-by-word headings, highlighted words, the
+  header that becomes a pill, rolling button labels, rolling numbers, scrolling bands, statements that fill in on
+  scroll, sticky stacking cards, framed image cards, the footer wordmark, smooth scrolling), the small finishing
+  details, the mistakes a real build made that only a browser shows, and how to study reference sites.
+
 ## 1.2.0 — 2026-11-25
 
 From an agent's full build of a bilingual (English and Arabic) site through the MCP, and a re-test of each point
