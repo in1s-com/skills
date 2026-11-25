@@ -110,6 +110,13 @@ a site token, call `get_site_overview`: it answers for the token's one website. 
 - **A website listed with `unavailable`**: the owner's plan is paused, the site is suspended, or the person's access
   ended. The reason is given.
 - **Fewer tools than expected**: the access level leaves them out. Make the token or connection again with more access.
+- **Every tool listed twice** (for example `mcp__in1s__…` and `mcp__in1s-mysite__…`): the same site is connected
+  both by sign-in and by a site token. Keep the sign-in one, remove the other (`claude mcp remove in1s-mysite`), and
+  revoke its token in the panel.
+- **A tool's description is out of date**: the client keeps the tool list from when it connected. Reconnect
+  (`/mcp` → in1s → Reconnect in Claude Code) after the server has been updated.
+- **Claude Code shows no in1s in `/mcp` right after `claude mcp add`**: a running session loads servers when it
+  starts. Exit and start it again (`claude --continue` keeps the conversation), then Authenticate.
 
 ## Token hygiene
 

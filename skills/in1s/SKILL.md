@@ -4,7 +4,7 @@ description: Use when the user wants to build, edit, run or connect a website on
 license: MIT
 metadata:
   author: in1s
-  version: "1.1.0"
+  version: "1.2.0"
   homepage: https://in1s.com
 ---
 
@@ -49,6 +49,12 @@ names.
 When the person should review new content before visitors see it, create it unpublished (`isPublished: false` on
 `create_entry` and `create_route`) and publish it once they approve (`set_entries_published`, `set_routes_published`).
 
+Don't create throwaway records to find out how something behaves. `create_route` writes its template into the
+**published** theme, and trashing the page leaves that file there. Test pages, lists, media and fonts also leave
+history and trash behind on the person's site. Read the tool's description, `get_liquid_reference` and the
+references here first. When a test is the only way, name it `zz-…`, tell the person, and remove it afterwards
+(`discard_draft_file` for your own draft files, the trash tools for records).
+
 If a tool you expected is missing, the access does not allow it. Calling it returns the permission it needs. Tell the
 person which permission to grant. Don't look for a way around it.
 
@@ -76,7 +82,10 @@ includes.
   `data`, where they are silently ignored. Every other field type's value: [references/field-values.md](references/field-values.md).
 - **Links to the site's own pages** use references, so they follow the visitor's language and survive slug changes:
   `in1s://routes/handle:{handle}`, `in1s://routes/{id}`, `in1s://data-lists/{handle}`,
-  `in1s://data-lists/{handle}/{slug}`. Don't type `/about`.
+  `in1s://data-lists/{handle}/{slug}`. They work in `url` settings and fields, and in `<a href>` inside richtext.
+  Don't type `/about`. On a multilingual site entries often have a different slug per language, so a typed English
+  path printed on the Arabic page reaches the entry only through a redirect. In menus, use a page, list or entry link
+  rather than a custom (`http_link`) one: a custom path gets only the language prefix.
 - **These replace the whole set**, so read first and send back everything you keep:
   - `update_menu` `links`;
   - `update_form` `fields` and `statuses`;
@@ -152,6 +161,7 @@ never in a loop. Site health checks run one at a time, about 6 an hour per websi
 | Publish refused: `changedUnderneath` | The live file changed after the draft edit | `read_theme_file` with `view: "published"`, merge, `write_theme_file` with that `versionId` |
 | HTTP 429 | 120 requests a minute per token or connection | Slow down and batch |
 | `unavailable` on a website | Plan paused, suspended, or access ended | Report the reason; don't retry |
+| A tool behaves differently from its description, or a tool you read about is missing | The client loaded the tool list when it connected; the server has changed since | Ask the person to reconnect (Claude Code: `/mcp` → in1s → Reconnect), then read the tool again |
 
 ## More
 
@@ -161,6 +171,7 @@ never in a loop. Site health checks run one at a time, about 6 an hour per websi
   [references/forms-and-workflows.md](references/forms-and-workflows.md)
 - Popups, chat button, cookie consent, tracking, newsletter, email sending, domains, analytics, site files:
   [references/site-operations.md](references/site-operations.md)
-- Step-by-step recipes (new page, blog post, form with email, import, custom domain, new language, SEO sweep):
+- Step-by-step recipes (a whole website, new page, blog post, form with email, import, custom domain, new language,
+  SEO sweep):
   [references/recipes.md](references/recipes.md)
 - Theme sections and Liquid code: the **in1s-theme-development** skill

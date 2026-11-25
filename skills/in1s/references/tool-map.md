@@ -40,7 +40,7 @@ may publish · **irreversible** = cannot be undone from in1s.
 | `create_route` / `update_route` | Create/change a page. Its template `templates/route.{path}.json` is written to the **published** theme. **live** |
 | `duplicate_route` | Copy a page as an unpublished draft. |
 | `set_routes_published` / `set_routes_search_visibility` / `trash_routes` | Bulk, up to 100 ids. |
-| `trash_route` / `restore_route` | Single page trash and restore. |
+| `trash_route` / `restore_route` | Single page trash and restore. The page's template file stays in the theme. |
 | `create_page_preview_link` | Time-limited link to a page as saved, published or draft. |
 | `suggest_slug` / `check_slug` | Free URL slugs in every language / is this slug free. |
 | `update_seo` | Search title, description, share image, noindex of an entry, list or page. **live** |
@@ -63,7 +63,7 @@ may publish · **irreversible** = cannot be undone from in1s.
 | `get_media_usages` | Where a file is used. Read before trashing. |
 | `trash_media` / `restore_media` | Trash empties every place that uses the uuid. |
 | `list_media_folders` / `create_media_folder` / `rename_media_folder` / `move_media_folder` / `delete_media_folder` / `move_media` | Organise the library; folders never change URLs. |
-| `list_fonts` | Fonts allowed for `font_picker` settings (`<family>_n4` = regular, `_n7` bold, `i` italic). |
+| `list_fonts` | Fonts allowed for `font_picker` settings (`<family>_n4` = regular, `_n7` bold, `i` italic). Call it without `search`, `per_page: 100`, to see the whole library. |
 | `upload_font_from_url` / `upload_font` | Add a licensed web font. |
 | `delete_font` | No trash. **irreversible** |
 
@@ -72,8 +72,8 @@ may publish · **irreversible** = cannot be undone from in1s.
 | Tool | What it does |
 |---|---|
 | `get_theme_catalog` | Section and block types the theme offers, their settings, presets, limits, where they may go. |
-| `get_template` | A template's sections, layout and groups, plus `versions` to pass back as `base_versions`. |
-| `upsert_section` | Change, add, move or remove ONE section. Its `settings` are replaced whole. |
+| `get_template` | A template's sections, layout and groups, plus `versions` to pass back as `base_versions`. `include_groups`, `include_layout`, `include_schemas` false for a small answer. |
+| `upsert_section` | Change, add, move or remove ONE section. Its `settings` are replaced whole. A type without `presets` cannot be added. |
 | `update_sections` | Save whole containers; a section left out is removed. |
 | `get_theme_settings` / `update_theme_settings` | Colors, fonts, layout options, style presets. |
 | `get_translations` / `update_translations` | Storefront texts per language; `allow_new_keys` to add one. |
@@ -100,7 +100,7 @@ may publish · **irreversible** = cannot be undone from in1s.
 | Tool | What it does |
 |---|---|
 | `get_draft_status` | What the shared draft holds, who wrote each file, `changedUnderneath`, `may_publish`. |
-| `render_page` | A published page as the DRAFT theme renders it: sections, text, images, links, errors. 404 for an unpublished page. Needs theme edit or code. |
+| `render_page` | A published page as the DRAFT theme renders it: sections, text, images, links, errors. 404 for an unpublished page. Text only: no layout, CSS or motion. Needs theme edit or code. |
 | `create_preview_link` | 24-hour read-only link to the draft. Show it to the person. |
 | `list_preview_links` / `revoke_preview_link` | Open preview links, including ones shared with clients. |
 | `publish_draft` | Make the whole shared draft live. **live, gated** |

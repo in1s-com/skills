@@ -22,6 +22,7 @@ Each skill keeps its `SKILL.md` short and loads detail from `references/` only w
 | [forms-and-workflows.md](skills/in1s/references/forms-and-workflows.md) | Form fields, conditions, statuses, capacity, comments; workflow triggers and actions |
 | [site-operations.md](skills/in1s/references/site-operations.md) | Popups, chat button, consent, tracking, newsletter, email, domains, analytics |
 | [data-list-templates.md](skills/in1s-theme-development/references/data-list-templates.md) | Listing and entry templates, filters, sorting, entry fields, forms in Liquid, search |
+| [design-and-motion.md](skills/in1s-theme-development/references/design-and-motion.md) | A design direction for any kind of site, modern patterns, motion that never hides content, accessibility |
 
 The MCP server already tells an agent what each of its tools does. These skills add what the tools cannot say:
 connecting in the first place, which changes go live and which go to the draft, the shortest path for common jobs,

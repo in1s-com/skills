@@ -4,7 +4,7 @@ description: Use when changing how an in1s website looks or is built - adding, m
 license: MIT
 metadata:
   author: in1s
-  version: "1.1.0"
+  version: "1.2.0"
   homepage: https://in1s.com
 ---
 
@@ -28,7 +28,7 @@ configured. Write a new file only when nothing in the catalog can do the job.
 | A storefront label (button, heading, message) | Translations | `get_translations` → `update_translations` |
 | A section type the theme does not have | Code | `get_liquid_reference` → read a similar section → `write_theme_file` |
 | A list's listing or entry pages, comments, search | Code | [references/data-list-templates.md](references/data-list-templates.md) |
-| A redesign | New theme | Ask first: see "Building another theme" below |
+| A redesign, or "make it modern" | Design, then code | Ask first: see "Building another theme" below, then [references/design-and-motion.md](references/design-and-motion.md) |
 
 Before writing a new section, look for what already exists:
 
@@ -58,22 +58,49 @@ explicit go-ahead, and agree on one of these:
 ## The loop
 
 1. **Read**: `get_draft_status` (the draft is shared; note other people's changes), then `get_template` or
-   `read_theme_file`. Keep the `versions` / `versionId` the read returns.
+   `read_theme_file`. Keep the `versions` / `versionId` the read returns. When you only change the template, pass
+   `get_template` `include_groups: false`, `include_layout: false` and `include_schemas: false`: the answer is a
+   fraction of the size.
 2. **Write**: send the `base_version` / `base_versions` you read. A conflict means someone saved in between: read
-   again, merge, retry.
-3. **Check**: `validate_theme` (errors block publishing), then `render_page` on an affected page: `errors`, the
-   section order, the text, the links.
-4. **Show**: `create_preview_link` and give the person the link. Each call ends the previous link this token made.
-5. **Publish** only when the person asks, and only with `may_publish`. Tell them whose changes are in the draft first.
+   again, merge, retry. Change an existing file with `edit_theme_file` (exact `old` → `new` pieces), and one section
+   with `upsert_section`. Keep `write_theme_file` for new files: resending a whole stylesheet or template to change a
+   line wastes the person's tokens and risks overwriting a collaborator's edit.
+3. **Check**: `validate_theme` (errors block publishing), then `render_page` on an affected page in **every**
+   language: `errors`, the section order, the text, the links (an Arabic page's links should be Arabic URLs).
+4. **Look**: `render_page` is text only. It cannot show layout, CSS, overflow, contrast or motion. See "Look at
+   the page" below.
+5. **Show**: `create_preview_link` and give the person the link. Each call ends the previous link this token made.
+6. **Publish** only when the person asks, and only with `may_publish`. Tell them whose changes are in the draft first.
 
 Settings in `upsert_section` are **replaced, not merged**: send every setting and block you keep, exactly as
 `get_template` returned them, with only your change applied. `update_sections` replaces whole containers: a section
-left out of a template's `sections` is removed.
+left out of a template's `sections` is removed. A section type whose schema has no `presets` cannot be added to a
+template: `upsert_section` answers "it has no presets". Give a new section a preset before placing it.
+
+## Look at the page
+
+No MCP tool shows what a page looks like. Bugs that only a screenshot reveals: a sticky header that scrolls away, a
+strip of the wrong background, text that overflows on a phone, a heading that came out as a `<div>`, content left
+invisible by a reveal animation, poor contrast over a photo.
+
+- **If you can run a browser** (Playwright, Chrome tools): open the `create_preview_link` URL at about 1440 and 390
+  pixels wide, and once in each right-to-left language. Scroll the whole page with real wheel events, since scroll
+  animations only start then. Check the console for errors, that `document.documentElement.scrollWidth` is not wider
+  than the window, that nothing is still hidden, that menus and the language switch work, and that it still reads
+  with `prefers-reduced-motion: reduce`. Fix what you find before you report.
+- **If you cannot**, say so plainly in your report ("checked the text and links, not the layout") and ask the person
+  to look at the preview on a phone and a computer.
+
+A preview link opens the draft for the browser session it is opened in. Switching language on the previewed site
+keeps the preview.
 
 ## Content in settings
 
 - **Links** to the site's own pages use references, which follow the visitor's language:
-  `in1s://routes/handle:download`, `in1s://data-lists/blog-posts`, `in1s://data-lists/blog-posts/{slug}`.
+  `in1s://routes/handle:download`, `in1s://data-lists/blog-posts`, `in1s://data-lists/blog-posts/{slug}`. This works
+  in `url` settings **and** inside `richtext` settings (`<a href="in1s://data-lists/services/seo">`): on an Arabic page
+  both print the Arabic URL. A typed `/services/seo` gets only the `/ar` prefix, and an entry whose Arabic slug differs
+  then answers through a redirect at best. `{slug}` may be the entry's slug in any language.
 - **Image and video settings** take a media library **uuid** (`list_media`, `upload_media_from_url`). An address there
   is kept but shows nothing; the answer's `normalized` reports it as `media_external`.
 - **Real facts only**: prices, plan features, dates, phone numbers, addresses, testimonials and statistics come from
@@ -211,7 +238,14 @@ These come from `get_liquid_reference`; read its full list for the rest.
   `localization.available_languages`.
 - Fonts must cover the script. Check the theme's current fonts (`get_theme_settings`) before calling a theme ready
   for a new script. Many Latin fonts have no Arabic letters. For Arabic, `list_fonts` offers `ibm_plex_sans_arabic`,
-  `noto_kufi_arabic`, `cairo`, `tajawal` and `alexandria`.
+  `noto_kufi_arabic`, `cairo`, `tajawal` and `alexandria`. Call `list_fonts` **without** `search` (and with
+  `per_page: 100`) to see the whole library; a search narrows it, and a family missing from a filtered answer may
+  still be there.
+- A family the library does not have: `upload_font_from_url` with the font file's own address (a `.woff2`, not a
+  stylesheet URL) so the site serves it itself. Loading it from Google Fonts or another CDN in the layout also works,
+  but it is a third-party request on every page: tell the person.
+- Arabic text: `letter-spacing: 0` (tracking breaks joined letters), a taller `line-height` than Latin, and no
+  word-by-word splitting that separates letters of one word. Wrap phone numbers and Latin codes in `<span dir="ltr">`.
 - A new storefront language: the site gets it first (`update_settings` `locale`), then the theme
   (`add_theme_language`, then `update_translations`).
 
@@ -233,6 +267,10 @@ Reference it with `{{ 'hero.webp' | asset_url }}`. CSS and JS are text files: us
 | A Shopify-only filter or object | Passes through silently | Only what `get_liquid_reference` lists |
 | Publishing to "see it" | Everyone's draft goes live | `render_page` and `create_preview_link` |
 | Placeholder prices or quotes | Invented facts on a live site after publish | Ask, or keep the preset text |
+| `write_theme_file` with the whole file to change a line | Large resend; a collaborator's edit can be lost | `edit_theme_file` |
+| A reveal animation that starts with `opacity: 0` in plain CSS | Blank page without JavaScript, in the editor, or for reduced motion | Hide only under a class the script adds ([design-and-motion.md](references/design-and-motion.md)) |
+| Calling the work done after `render_page` | Layout bugs nobody saw | Look at the preview in a browser, or say you could not |
+| A typed `/ar/...` URL in an Arabic text | Breaks when a slug changes | `in1s://` reference; it prints the right URL per language |
 
 ## When something breaks
 

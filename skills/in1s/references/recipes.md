@@ -4,6 +4,27 @@ Each recipe is the shortest correct path. `website` is omitted from the argument
 it goes on every call; with a site token there is none. Every
 step that writes is marked **live** or **draft**.
 
+## A whole website (or rebuilding an old one)
+
+1. **Ask once, in one round**, about everything that changes what you build: the languages, the scope (which pages
+   now, which later), facts you could not verify or where sources disagree (address, phone, hours), image rights,
+   whether new content may go live at once. Then propose the design direction (the **in1s-theme-development** skill, its
+   `references/design-and-motion.md`) and wait for an OK.
+2. **Settings**: languages (`update_settings` `locale`), the site name, SEO defaults. **live**
+3. **Collections first**: `create_data_list` for each repeating kind (services, team, clients, posts), with
+   `entriesPerPage` large enough for the lists you show whole, and slugs per language. **live**
+4. **Media**: `upload_media_from_url` with `alt` in every language, one call per file. Keep the uuids. **live**
+5. **Entries**: `create_entry` with `slugs` per language. On a site rebuilt from an old one, reuse the old URLs as
+   slugs, and add `create_redirect` for every old address that changes. **live**
+6. **Pages**: `create_route` (unpublished while the theme is not ready), then their sections. **live / draft**
+7. **Menus**: `create_menu` / `update_menu` with page, list and entry links (not typed paths), only to published
+   targets. **live**
+8. **Theme**: theme settings, then one section at a time; every link an `in1s://` reference; every visible word
+   editable in a setting or a translation key in **every** language. **draft**
+9. **Check** each page in each language with `render_page`, look at the preview in a browser (desktop, phone,
+   right-to-left), `validate_theme`, `run_site_health`. Then show the preview link and list what you assumed and what
+   the person must still supply.
+
 ## A new page (route)
 
 1. `suggest_slug` `{"type": "route", "text": {"l10n": true, "en": "Pricing"}}`: a free slug in every language.

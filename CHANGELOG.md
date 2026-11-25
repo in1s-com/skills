@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0 — 2026-11-25
+
+From an agent's full build of a bilingual (English and Arabic) site through the MCP, and a re-test of each point
+against the live server.
+
+- Theme skill: a design, motion and accessibility reference (`design-and-motion.md`): choosing a direction for any
+  kind of site, what modern sites share, motion levels, motion that never hides content (no JavaScript, editor,
+  reduced motion, print; checked with the theme validator), WCAG 2.2 AA.
+- Theme skill: "Look at the page": `render_page` is text only, so check the preview in a browser at desktop and phone
+  width and in right-to-left, or say it was not checked.
+- Theme skill: change files with `edit_theme_file` and one section with `upsert_section`; small `get_template`
+  answers; a section without `presets` cannot be placed; `in1s://` links work inside richtext settings; the whole
+  font library is listed only without `search`; self-host fonts with `upload_font_from_url`; Arabic typography.
+- in1s skill: don't create throwaway records to learn how a tool behaves (a page's template stays in the published
+  theme after the page is trashed); a stale tool description means reconnecting; menu links to pages rather than
+  typed paths; a "whole website" recipe.
+- connect.md: tools listed twice, stale descriptions, and a new server missing from `/mcp` until restart.
+- Two new eval scenarios: bilingual links, and "make it modern".
+
 ## 1.1.0 — 2026-11-25
 
 - New references: data list field definitions and the value each type takes (`field-values.md`), forms and

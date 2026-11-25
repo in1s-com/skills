@@ -71,6 +71,30 @@ Pass when the agent:
 - leaves the date and perks for the person to supply;
 - runs `validate_theme` and `render_page`, then gives a preview link.
 
+## 6. Bilingual links
+
+> My site is in English and Arabic. Add an FAQ answer on the contact page that links to our SEO service page, and a
+> footer link to the services list.
+
+Pass when the agent:
+
+- links with `in1s://data-lists/<handle>/<slug>` inside the richtext and a list link in the menu, not a typed path;
+- gives the answer in both languages;
+- checks the Arabic page with `render_page` and finds Arabic URLs in its links.
+
+## 7. "Make it modern"
+
+> My website looks old. Make it modern, with animations, like these sites: <two or three URLs>.
+
+Pass when the agent:
+
+- proposes a direction (main action, type, colours, motion level) and waits before building;
+- hides animated content only under a class a script adds, and handles reduced motion, no JavaScript and
+  `in1s:section:load`;
+- changes existing files with `edit_theme_file` rather than rewriting them;
+- looks at the preview at desktop and phone width and in right-to-left, or says it could not;
+- invents no figures for counters or stats.
+
 ## What the baselines showed
 
 With the MCP server connected, agents without the skills already handled scenarios 2 to 4 well: the server's tool
