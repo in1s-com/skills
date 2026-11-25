@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0 — 2026-11-25
+
+- The server's three MCP prompts, `build-website`, `redesign` and `seo-sweep` (liquid-things d2e4428d1, live since
+  25 Nov 2026): what they are and that their steps agree with this skill.
+
 ## 1.3.0 — 2026-11-25
 
 - `create_website`: a signed-in connection with "Everything your role allows" can make a new website on the person's

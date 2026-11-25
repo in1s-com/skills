@@ -4,7 +4,7 @@ description: Use when changing how an in1s website looks or is built - adding, m
 license: MIT
 metadata:
   author: in1s
-  version: "1.3.0"
+  version: "1.4.0"
   homepage: https://in1s.com
 ---
 

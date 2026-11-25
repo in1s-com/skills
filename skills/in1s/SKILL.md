@@ -4,7 +4,7 @@ description: Use when the user wants to build, edit, run or connect a website on
 license: MIT
 metadata:
   author: in1s
-  version: "1.3.0"
+  version: "1.4.0"
   homepage: https://in1s.com
 ---
 
@@ -57,6 +57,10 @@ Don't create throwaway records to find out how something behaves. `create_route`
 history and trash behind on the person's site. Read the tool's description, `get_liquid_reference` and the
 references here first. When a test is the only way, name it `zz-…`, tell the person, and remove it afterwards
 (`discard_draft_file` for your own draft files, the trash tools for records).
+
+The server also offers three **prompts** for whole jobs, which clients list beside the tools (Claude Code as slash
+commands such as `/mcp__in1s__build-website`): `build-website`, `redesign` and `seo-sweep`, each taking an optional
+`brief`. When the person starts one, follow its steps; they agree with this skill.
 
 If a tool you expected is missing, the access does not allow it. Calling it returns the permission it needs. Tell the
 person which permission to grant. Don't look for a way around it.
