@@ -1,0 +1,17 @@
+{
+  "name": "in1s",
+  "owner": {
+    "name": "in1s",
+    "url": "https://in1s.com"
+  },
+  "metadata": {
+    "description": "Skills and the MCP server for building and running websites on in1s."
+  },
+  "plugins": [
+    {
+      "name": "in1s",
+      "source": "./",
+      "description": "The in1s skills (site work, theme development) and the in1s MCP server."
+    }
+  ]
+}

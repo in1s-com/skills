@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "in1s": {
+      "type": "http",
+      "url": "https://accounts.in1s.com/mcp"
+    }
+  }
+}
