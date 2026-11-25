@@ -4,7 +4,7 @@ description: Use when changing how an in1s website looks or is built - adding, m
 license: MIT
 metadata:
   author: in1s
-  version: "1.0.0"
+  version: "1.1.0"
   homepage: https://in1s.com
 ---
 
@@ -27,6 +27,7 @@ configured. Write a new file only when nothing in the catalog can do the job.
 | Colors, fonts, spacing across the site | Theme settings | `get_theme_settings` → `update_theme_settings` (fonts from `list_fonts`) |
 | A storefront label (button, heading, message) | Translations | `get_translations` → `update_translations` |
 | A section type the theme does not have | Code | `get_liquid_reference` → read a similar section → `write_theme_file` |
+| A list's listing or entry pages, comments, search | Code | [references/data-list-templates.md](references/data-list-templates.md) |
 | A redesign | New theme | Ask first: see "Building another theme" below |
 
 Before writing a new section, look for what already exists:
@@ -88,7 +89,8 @@ rule's `code`. Use only the tags and filters it lists: an unknown filter passes 
 an error. Then read one similar section in the theme and match its structure, class names, CSS variables and color
 schemes.
 
-A minimal section that passes every check:
+A minimal section that passes every check. It was run through the in1s theme validator in a shipped theme with its
+locale keys added, and gave no diagnostics:
 
 ```liquid
 <section class="section feature-list" {{ section.in1s_attributes }}>
@@ -160,7 +162,9 @@ Why each part is there:
 Then add the keys:
 
 - **Storefront words** (`| t`): `update_translations` with `allow_new_keys: true`, for example
-  `{"sections.feature-list.learn_more": "Learn more"}`.
+  `{"sections.feature-list.learn_more": "Learn more"}`. Do it for **every** language `get_translations` lists in
+  `locales`, not only the default one. A key missing from another language raises `partial_locale_file`, and that
+  language's visitors see the default text.
 - **Editor labels** (`t:` in the schema): `edit_theme_file` on `locales/en.default.schema.json`. It is a large
   protected file, which can be edited but not moved or deleted. Find a unique anchor at the right depth with
   `search_theme_code` (for example the line that opens a neighbouring section's object), and insert the new
@@ -183,7 +187,8 @@ These come from `get_liquid_reference`; read its full list for the rest.
 - **Paths go through `route_url`**: `{{ '/contact' | route_url }}`. A literal `href="/contact"` sends visitors of
   another language to the default one.
 - **`data_list.entries` is one page** (`page_size`, 12 unless set). Wrap the loop in
-  `{% paginate data_list.entries by data_list.page_size %}`.
+  `{% paginate data_list.entries by data_list.page_size %}`. `data_lists['handle'].entries` is every entry. Templates,
+  filters, sorting, entry fields and comments: [references/data-list-templates.md](references/data-list-templates.md).
 - **The engine wraps each section** in `<div id="in1s-section-{id}" class="in1s-section …">` exactly as tall as the
   section, so `position: sticky` goes on the **wrapper**: set the schema's `"class"` and style that class.
 - **Scripts must survive editor re-renders**: set up again on `in1s:section:load`, and clean up timers and observers on
@@ -194,7 +199,7 @@ These come from `get_liquid_reference`; read its full list for the rest.
   (`data-*` attributes or hidden elements) and let the script pick them. Format numbers and dates with `Intl` in the
   page's `lang`.
 - **Visitor values are hostile**: `form.session.*` and submission data print through `| escape`, numbers through
-  `| times: 1`, and links only through the theme's `safe-relative-url` snippet.
+  `| times: 1`, and links only through a `safe-relative-url` snippet where the theme has one (never print a visitor-written link without it).
 - **Plurals and parameters** go through `t`: `{{ 'sections.reviews.count' | t: count: reviews.size }}`. Never build a
   sentence from fragments.
 

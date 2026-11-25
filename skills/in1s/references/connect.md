@@ -102,7 +102,8 @@ Header: Authorization: Bearer in1s_…
 
 ## Check it works
 
-Call `list_websites`. One entry per website the access covers means it is connected. Common failures:
+With a sign-in connection, call `list_websites`: one entry per website the access covers means it is connected. With
+a site token, call `get_site_overview`: it answers for the token's one website. Common failures:
 
 - **401**: the token is wrong, revoked or expired, or the sign-in was disconnected. Make a new one.
 - **403** naming the request origin: the client is a browser page. Use an MCP client instead.

@@ -1,6 +1,7 @@
 # in1s recipes
 
-Each recipe is the shortest correct path. `website` is omitted from the arguments below but goes on every call. Every
+Each recipe is the shortest correct path. `website` is omitted from the arguments below. With a signed-in connection
+it goes on every call; with a site token there is none. Every
 step that writes is marked **live** or **draft**.
 
 ## A new page (route)
@@ -26,7 +27,9 @@ step that writes is marked **live** or **draft**.
    fields) and the `url` (for `ogImage`). **live**
 3. `suggest_slug` `{"type": "data-list-entry", "list_id": <id>, "text": {...}}`.
 4. `create_entry` `{"list_id": <id>, "title": {...}, "slugs": {...}, "isPublished": false, "data": {"<field id>": ...}}`.
-   Translatable fields take `l10n` maps; an image field takes the uuid. **live**
+   Translatable fields take `l10n` maps; an image field takes the uuid. A reference field (an author, a category) goes
+   in `"references": {"<field id>": [<entry id>]}`, not in `data`. Value per type:
+   [field-values.md](field-values.md). **live**
 5. `update_seo` for the search title, description and share image. **live**
 6. Show the person the text (an unpublished entry has no preview link), publish with `set_entries_published` when
    they approve, then check it with `render_page` `{"entry_id": <id>}`.
@@ -64,8 +67,8 @@ Match the style of the existing entries: read two with `list_entries` and reuse 
    }
    ```
 
-   `to` takes addresses or `{{ submission.<field id> }}`, comma-separated. Only the first 5 are used, and the rest are
-   dropped without an error. `get_workflow` on an existing
+   Every action and trigger: [forms-and-workflows.md](forms-and-workflows.md).
+   `to` takes addresses or `{{ submission.<field id> }}`, comma-separated, at most 5 (more is refused on save). `get_workflow` on an existing
    workflow shows every action's settings. Enable it with `update_workflow` only after the person has read the email.
    **live**
 4. Place the form on a page through a theme section that takes a form setting. **draft**

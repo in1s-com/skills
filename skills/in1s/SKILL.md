@@ -4,7 +4,7 @@ description: Use when the user wants to build, edit, run or connect a website on
 license: MIT
 metadata:
   author: in1s
-  version: "1.0.0"
+  version: "1.1.0"
   homepage: https://in1s.com
 ---
 
@@ -20,7 +20,7 @@ visitors see only after it is published. Before every write, know which of the t
 
 ## Not connected yet?
 
-If no tool such as `list_websites` is available, the server is not connected. The endpoint is
+If no tool such as `get_site_overview` is available, the server is not connected. The endpoint is
 `https://accounts.in1s.com/mcp` (streamable HTTP). Pick the way that matches the client:
 
 | Client | How |
@@ -37,9 +37,12 @@ names.
 
 ## Every session starts the same way
 
-1. `list_websites`: each website's `id`, `permissions`, `may_publish` and `unavailable`. Pass the id as `website` on
-   every other call.
-2. `get_site_overview`: languages, active theme, template names, data lists, forms.
+1. **Signed-in connection** (Claude Code sign-in, claude.ai, Claude Desktop, ChatGPT): call `list_websites`. It gives
+   each website's `id`, `permissions`, `may_publish` and `unavailable`. Every other tool takes that id as `website`.
+   **Site token** (Cursor, VS Code, Codex, or a token in Claude Code): there is no `list_websites` and no `website`
+   argument. The token is bound to one website.
+2. `get_site_overview`: languages, active theme, template names, data lists, forms, your permissions and
+   `may_publish`.
 3. Read the record before you change it. Most writes need what the read returned: a `base_version`, the full set of
    links, fields or settings, or the field ids.
 
@@ -69,6 +72,8 @@ includes.
   only the languages you send change, and a language set to `null` is removed.
 - **Media**: an entry's image field and a theme image setting take the file's **uuid**. A URL there shows nothing.
   A share image (`ogImage`) takes the URL.
+- **Entry links to other entries** (reference fields) go in the `references` argument, `{"author": [12]}`, never in
+  `data`, where they are silently ignored. Every other field type's value: [references/field-values.md](references/field-values.md).
 - **Links to the site's own pages** use references, so they follow the visitor's language and survive slug changes:
   `in1s://routes/handle:{handle}`, `in1s://routes/{id}`, `in1s://data-lists/{handle}`,
   `in1s://data-lists/{handle}/{slug}`. Don't type `/about`.
@@ -151,6 +156,11 @@ never in a loop. Site health checks run one at a time, about 6 an hour per websi
 ## More
 
 - Every tool, grouped by job: [references/tool-map.md](references/tool-map.md)
+- Data list fields and the value each type takes: [references/field-values.md](references/field-values.md)
+- Forms (field types, conditions, statuses, capacity, comments) and workflows (triggers, every action):
+  [references/forms-and-workflows.md](references/forms-and-workflows.md)
+- Popups, chat button, cookie consent, tracking, newsletter, email sending, domains, analytics, site files:
+  [references/site-operations.md](references/site-operations.md)
 - Step-by-step recipes (new page, blog post, form with email, import, custom domain, new language, SEO sweep):
   [references/recipes.md](references/recipes.md)
 - Theme sections and Liquid code: the **in1s-theme-development** skill

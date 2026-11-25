@@ -9,7 +9,19 @@ They work in Claude Code, Claude Desktop, claude.ai, Codex, Cursor, VS Code and 
 | Skill | Use it for |
 |---|---|
 | [`in1s`](skills/in1s/SKILL.md) | Connecting the MCP server, then working on a site: pages, data lists and entries, media, menus, SEO, forms, submissions, workflows, webhooks, domains, languages, publishing safely. |
-| [`in1s-theme-development`](skills/in1s-theme-development/SKILL.md) | How a site looks: sections and blocks, theme settings, fonts, translations, right-to-left, and writing Liquid theme files that pass in1s's validator. |
+| [`in1s-theme-development`](skills/in1s-theme-development/SKILL.md) | How a site looks: sections and blocks, theme settings, fonts, translations, right-to-left, and writing Liquid theme files that pass in1s's validator, including data list listings, entry pages, filters, comments and search. |
+
+Each skill keeps its `SKILL.md` short and loads detail from `references/` only when a task needs it:
+
+| Reference | Covers |
+|---|---|
+| [connect.md](skills/in1s/references/connect.md) | Configuration for every client, access levels, token hygiene |
+| [tool-map.md](skills/in1s/references/tool-map.md) | Every MCP tool, grouped by job, marked live / draft / needs publishing rights / irreversible |
+| [recipes.md](skills/in1s/references/recipes.md) | New page, blog post, data list, form with email, import, domain, new language, SEO sweep, undo |
+| [field-values.md](skills/in1s/references/field-values.md) | Data list field definitions and the value each field type takes |
+| [forms-and-workflows.md](skills/in1s/references/forms-and-workflows.md) | Form fields, conditions, statuses, capacity, comments; workflow triggers and actions |
+| [site-operations.md](skills/in1s/references/site-operations.md) | Popups, chat button, consent, tracking, newsletter, email, domains, analytics |
+| [data-list-templates.md](skills/in1s-theme-development/references/data-list-templates.md) | Listing and entry templates, filters, sorting, entry fields, forms in Liquid, search |
 
 The MCP server already tells an agent what each of its tools does. These skills add what the tools cannot say:
 connecting in the first place, which changes go live and which go to the draft, the shortest path for common jobs,
@@ -73,6 +85,13 @@ Config for every client: [skills/in1s/references/connect.md](skills/in1s/referen
 
 Report a security problem privately through this repository's **Security** tab → **Report a vulnerability**, not in
 a public issue.
+
+## Maintaining
+
+- `node scripts/check-tool-map.mjs` (with `IN1S_TOKEN` set to an owner's full-access site token) compares
+  `tool-map.md` with the tools the server offers, and fails when the server has a tool the map does not mention.
+- `claude plugin validate --strict .` checks the plugin and marketplace manifests.
+- [evals/](evals/README.md) holds the scenarios the skills were tested on.
 
 ## Contributing
 

@@ -2,7 +2,8 @@
 
 Every tool the in1s MCP server can offer, grouped by job. A connection only lists the tools its access allows, so some
 of these may be missing for a given website. Calling one that is missing returns an error that names the permission
-it needs. Every tool except `list_websites` takes `website`, the id `list_websites` returns.
+it needs. With a signed-in connection, every tool except `list_websites` takes `website`, the id `list_websites`
+returns. A site token is bound to one website: it has no `list_websites` and no `website` argument.
 
 Legend: **live** = visitors see it at once · **draft** = goes to the theme draft · **gated** = also needs a token that
 may publish · **irreversible** = cannot be undone from in1s.
@@ -11,7 +12,7 @@ may publish · **irreversible** = cannot be undone from in1s.
 
 | Tool | What it does |
 |---|---|
-| `list_websites` | The websites you may work on: id, url, role, `permissions`, `may_publish`, `unavailable`. Call first. |
+| `list_websites` | Signed-in connections only. The websites you may work on: id, url, role, `permissions`, `may_publish`, `unavailable`. Call first. |
 | `get_site_overview` | One website at a glance: languages, active theme, template names, data lists, forms, your permissions. |
 | `get_settings` / `update_settings` | Store details, languages, site SEO, maintenance mode, profile, CAPTCHA, embedding, HSTS. One section per call. **live** |
 | `list_activity` | Who changed what, newest first. |
