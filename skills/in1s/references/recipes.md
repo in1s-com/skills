@@ -10,18 +10,23 @@ step that writes is marked **live** or **draft**.
    now, which later), facts you could not verify or where sources disagree (address, phone, hours), image rights,
    whether new content may go live at once. Then propose the design direction (the **in1s-theme-development** skill, its
    `references/design-and-motion.md`) and wait for an OK.
-2. **Settings**: languages (`update_settings` `locale`), the site name, SEO defaults. **live**
-3. **Collections first**: `create_data_list` for each repeating kind (services, team, clients, posts), with
+2. **The website itself**, when it does not exist yet: `create_website` (a signed-in connection with the person's whole
+   role) with the name, first language, the contact email the person gives you, and the subdomain and theme you agreed
+   (`list_theme_gallery` on any website you hold names the themes). It counts toward their plan, and the subdomain is
+   permanent, so confirm both first. Use the `id` it answers as `website` from then on. Otherwise the person creates
+   it in the panel and ticks it for your connection. **live**
+3. **Settings**: languages (`update_settings` `locale`), the site name, SEO defaults. **live**
+4. **Collections first**: `create_data_list` for each repeating kind (services, team, clients, posts), with
    `entriesPerPage` large enough for the lists you show whole, and slugs per language. **live**
-4. **Media**: `upload_media_from_url` with `alt` in every language, one call per file. Keep the uuids. **live**
-5. **Entries**: `create_entry` with `slugs` per language. On a site rebuilt from an old one, reuse the old URLs as
+5. **Media**: `upload_media_from_url` with `alt` in every language, one call per file. Keep the uuids. **live**
+6. **Entries**: `create_entry` with `slugs` per language. On a site rebuilt from an old one, reuse the old URLs as
    slugs, and add `create_redirect` for every old address that changes. **live**
-6. **Pages**: `create_route` (unpublished while the theme is not ready), then their sections. **live / draft**
-7. **Menus**: `create_menu` / `update_menu` with page, list and entry links (not typed paths), only to published
+7. **Pages**: `create_route` (unpublished while the theme is not ready), then their sections. **live / draft**
+8. **Menus**: `create_menu` / `update_menu` with page, list and entry links (not typed paths), only to published
    targets. **live**
-8. **Theme**: theme settings, then one section at a time; every link an `in1s://` reference; every visible word
+9. **Theme**: theme settings, then one section at a time; every link an `in1s://` reference; every visible word
    editable in a setting or a translation key in **every** language. **draft**
-9. **Check** each page in each language with `render_page`, look at the preview in a browser (desktop, phone,
+10. **Check** each page in each language with `render_page`, look at the preview in a browser (desktop, phone,
    right-to-left), `validate_theme`, `run_site_health`. Then show the preview link and list what you assumed and what
    the person must still supply.
 

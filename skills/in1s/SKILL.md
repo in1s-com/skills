@@ -4,7 +4,7 @@ description: Use when the user wants to build, edit, run or connect a website on
 license: MIT
 metadata:
   author: in1s
-  version: "1.2.1"
+  version: "1.3.0"
   homepage: https://in1s.com
 ---
 
@@ -41,6 +41,9 @@ names.
    each website's `id`, `permissions`, `may_publish` and `unavailable`. Every other tool takes that id as `website`.
    **Site token** (Cursor, VS Code, Codex, or a token in Claude Code): there is no `list_websites` and no `website`
    argument. The token is bound to one website.
+   **A website that does not exist yet**: a signed-in connection with "Everything your role allows" has
+   `create_website`, which makes one on the person's account and adds it to the connection. Ask first: it counts toward
+   their plan, and its subdomain is permanent. Otherwise the person creates it in the panel.
 2. `get_site_overview`: languages, active theme, template names, data lists, forms, your permissions and
    `may_publish`.
 3. Read the record before you change it. Most writes need what the read returned: a `base_version`, the full set of
@@ -110,6 +113,7 @@ conversation before calling any of them, even when the request implies it:
 
 - **Permanent deletes**: `delete_trashed_*`, `delete_menu`, `delete_redirect`, `delete_webhook`, `delete_workflow`,
   `delete_font`. Prefer the trash tools, which `restore_*` can undo.
+- **The person's account**: `create_website` (counts toward their plan; the subdomain cannot change later).
 - **Live with no preview**: `publish_draft`, `restore_snapshot`, `discard_draft`, `discard_draft_file` (on someone
   else's change), `set_active_theme`, `apply_theme_update`, `add_domain`, `remove_domain`, `remove_sending_domain`.
 - **Locks visitors out or is hard to reverse**: `update_settings` with `maintenanceMode` (password-locks the site) or

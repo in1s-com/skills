@@ -13,6 +13,7 @@ may publish · **irreversible** = cannot be undone from in1s.
 | Tool | What it does |
 |---|---|
 | `list_websites` | Signed-in connections only. The websites you may work on: id, url, role, `permissions`, `may_publish`, `unavailable`. Call first. |
+| `create_website` | Signed-in connections with "Everything your role allows" only. A new website on the person's own account (name, first language, contact email; optional subdomain, theme from `list_theme_gallery`, timezone), added to the connection with the same access. Counts toward the plan's websites; the subdomain is permanent. Ask first. **live** |
 | `get_site_overview` | One website at a glance: languages, active theme, template names, data lists, forms, your permissions. |
 | `get_settings` / `update_settings` | Store details, languages, site SEO, maintenance mode, profile, CAPTCHA, embedding, HSTS. One section per call. **live** |
 | `list_activity` | Who changed what, newest first. |

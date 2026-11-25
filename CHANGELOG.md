@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0 — 2026-11-25
+
+- `create_website`: a signed-in connection with "Everything your role allows" can make a new website on the person's
+  account, which joins the connection. In the session start, "Ask first", the tool map, connect.md, and as step 2 of
+  the "whole website" recipe.
+
 ## 1.2.1 — 2026-11-25
 
 - design-and-motion.md: how each modern pattern works (reveal on view, word-by-word headings, highlighted words, the

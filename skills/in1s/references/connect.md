@@ -15,7 +15,8 @@ There are two ways to authorise it.
 
 Both carry an **access level** chosen when they are made:
 
-- **Everything your role allows**: follows the person's role as it changes.
+- **Everything your role allows**: follows the person's role as it changes. On a signed-in connection it also offers
+  `create_website`, a new website on the person's account.
 - **Content**: data lists, entries, media, navigation, pages and redirects; the theme is view-only.
 - **View only**: reads only.
 - **Custom**: tick each permission; only what the person holds can be given.
