@@ -12,9 +12,9 @@
 
 ## 1.5.0 — 2026-11-26
 
-- `list_domains` / `check_domain` / `add_domain`: a domain's `oldAddress` (it still points at an old in1s address,
-  keeps working, and the person should change its address record to the value in `records`), in site-operations.md
-  (liquid-things 4cabf2619).
+- `list_domains` / `check_domain` / `add_domain`: a domain's `oldAddress` and `oldAddressOnWww` (it still points at an
+  old in1s address, keeps working, and the person should change that record: the www record to the CNAME, or the
+  domain's A/AAAA record to the matching value in `records`), in site-operations.md (liquid-things 4cabf2619, cc77f5a75).
 
 ## 1.4.1 — 2026-11-26
 
