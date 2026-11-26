@@ -101,6 +101,8 @@ Form notifications, workflow emails and newsletter confirmations come from the p
    then.
 4. `list_domains` shows `sslStatus`, `sslProblem` and `wwwProblem`. `check_domain` re-checks after a DNS change and
    keeps checking for 72 hours; checking more often does not help.
+5. An `oldAddress` means the domain still points at an old in1s address. It keeps working and stays secure; tell the
+   person to change the address record to the A/AAAA value in `records`, then `check_domain`.
 
 Once secure, the custom domain becomes the site's main address. `update_settings` `hsts` (custom domains only; needs the
 domains edit permission) makes browsers insist on HTTPS for a year: only for domains that will always have it.

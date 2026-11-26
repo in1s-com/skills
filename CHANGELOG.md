@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0 — 2026-11-26
+
+- `list_domains` / `check_domain` / `add_domain`: a domain's `oldAddress` (it still points at an old in1s address,
+  keeps working, and the person should change its address record to the value in `records`), in site-operations.md
+  (liquid-things 4cabf2619).
+
 ## 1.4.1 — 2026-11-26
 
 - A website scheduled for deletion: `list_websites` shows it unavailable and every call on it answers 403
