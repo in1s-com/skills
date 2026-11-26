@@ -35,11 +35,11 @@ Run it in a terminal, not inside a Claude Code session. Then start Claude Code, 
 **Authenticate**, and complete the in1s Allow page in the browser. Add `--scope user` to make it available in every
 project; the sign-in is kept by Claude Code, so it is asked once.
 
-With a site token instead:
+With a site token instead, the person sets `IN1S_TOKEN` in their own terminal and runs:
 
 ```bash
 claude mcp add --transport http in1s-mysite "https://accounts.in1s.com/mcp" \
-  --header "Authorization: Bearer in1s_…"
+  --header "Authorization: Bearer $IN1S_TOKEN"
 ```
 
 ## claude.ai and Claude Desktop
@@ -123,6 +123,8 @@ a site token, call `get_site_overview`: it answers for the token's one website. 
 
 - A site token is shown **once**, when it is made. It starts with `in1s_`.
 - Keep it in the client's config or an environment variable. Never commit it, and never paste it into a chat.
+- The person puts the token in place themselves. An agent never writes a real token into a command, a config file
+  or a tool call: it shows the step with the placeholder (`$IN1S_TOKEN`, `in1s_…`) and lets the person do it.
 - A person may hold up to 10 live tokens per website. Revoke the ones no longer used.
 - Changing or resetting a password, signing out other devices, or "this wasn't me" revokes every token the person holds
   and disconnects every connected app. Reconnect afterwards.

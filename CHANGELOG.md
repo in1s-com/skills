@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.2 — 2026-11-26
+
+- Site tokens: the Claude Code command reads the token from `IN1S_TOKEN` in the person's own terminal, and an agent
+  never writes a real token into a command, config file or tool call (connect.md; Snyk W007).
+
 ## 1.5.1 — 2026-11-26
 
 - Preview links (draft and page): anyone who has one can see what it opens until it expires, so the agent gives it to the person
