@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.3 — 2026-11-26
+
+- Domains: `oldAddressOnWww`, and the exact record to change for an `oldAddress`: the www record to the CNAME, or the
+  domain's A (IPv4) or AAAA (IPv6) record to the matching value in `records`, removed when none of that kind is
+  current (site-operations.md; liquid-things cc77f5a75).
+
 ## 1.5.2 — 2026-11-26
 
 - Site tokens: the Claude Code command reads the token from `IN1S_TOKEN` in the person's own terminal, and an agent
@@ -12,9 +18,9 @@
 
 ## 1.5.0 — 2026-11-26
 
-- `list_domains` / `check_domain` / `add_domain`: a domain's `oldAddress` and `oldAddressOnWww` (it still points at an
-  old in1s address, keeps working, and the person should change that record: the www record to the CNAME, or the
-  domain's A/AAAA record to the matching value in `records`), in site-operations.md (liquid-things 4cabf2619, cc77f5a75).
+- `list_domains` / `check_domain` / `add_domain`: a domain's `oldAddress` (it still points at an old in1s address,
+  keeps working, and the person should change its address record to the value in `records`), in site-operations.md
+  (liquid-things 4cabf2619).
 
 ## 1.4.1 — 2026-11-26
 

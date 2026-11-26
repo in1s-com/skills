@@ -1,7 +1,7 @@
 {
   "name": "in1s",
   "displayName": "in1s",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Build and run in1s websites with an AI agent: the in1s MCP server plus skills for site content, publishing safely and theme development.",
   "author": {
     "name": "in1s",

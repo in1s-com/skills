@@ -4,7 +4,7 @@ description: Use when the user wants to build, edit, run or connect a website on
 license: MIT
 metadata:
   author: in1s
-  version: "1.5.2"
+  version: "1.5.3"
   homepage: https://in1s.com
 ---
 
