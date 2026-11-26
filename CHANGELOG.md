@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1 — 2026-11-26
+
+- A website scheduled for deletion: `list_websites` shows it unavailable and every call on it answers 403
+  `website_scheduled_for_deletion` (SKILL.md errors, connect.md, the docs reference's errors table).
+
 ## 1.4.0 — 2026-11-25
 
 - The server's three MCP prompts, `build-website`, `redesign` and `seo-sweep` (liquid-things d2e4428d1, live since

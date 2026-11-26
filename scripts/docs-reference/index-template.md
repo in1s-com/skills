@@ -190,6 +190,7 @@ A refusal comes back in one of three ways:
 |---|---|---|
 | HTTP 401 | The token is wrong, expired or revoked, or the app was disconnected | A connection's app renews its own sign-in; otherwise make a new token, or connect the app again |
 | HTTP 403 with `error` and `message` (401 for an account that is no longer active) | You are no longer a member, the website is suspended, your membership is paused, your email is not verified, or the owner requires two-step verification | Read the message; it says which |
+| HTTP 403 `website_scheduled_for_deletion` | The website is scheduled for deletion; `list_websites` shows it unavailable | Tell the person: the owner can cancel the deletion in the panel |
 | HTTP 403 "Forbidden: The request origin is not allowed." | The request came from a web page | Use an MCP client |
 | HTTP 429 `too_many_attempts` "Too many failed attempts. Try again in a minute." | 20 refused sign-ins in a minute from one address, token or connection | Wait a minute, then fix the token |
 | HTTP 429 | More than 120 requests in a minute from one token or connection | Wait, then slow down |

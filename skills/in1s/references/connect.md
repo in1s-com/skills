@@ -108,7 +108,7 @@ a site token, call `get_site_overview`: it answers for the token's one website. 
 
 - **401**: the token is wrong, revoked or expired, or the sign-in was disconnected. Make a new one.
 - **403** naming the request origin: the client is a browser page. Use an MCP client instead.
-- **A website listed with `unavailable`**: the owner's plan is paused, the site is suspended, or the person's access
+- **A website listed with `unavailable`**: the owner's plan is paused, the site is suspended or scheduled for deletion, or the person's access
   ended. The reason is given.
 - **Fewer tools than expected**: the access level leaves them out. Make the token or connection again with more access.
 - **Every tool listed twice** (for example `mcp__in1s__…` and `mcp__in1s-mysite__…`): the same site is connected
