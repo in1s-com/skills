@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.in1s/mcp",
+  "title": "in1s",
+  "description": "Build and run in1s websites: pages, content, media, forms, SEO, domains, themes and publishing.",
+  "websiteUrl": "https://in1s.com",
+  "repository": {
+    "url": "https://github.com/in1s-com/skills",
+    "source": "github"
+  },
+  "version": "1.4.1",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://accounts.in1s.com/mcp"
+    }
+  ]
+}
