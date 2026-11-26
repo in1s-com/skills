@@ -38,7 +38,8 @@ step that writes is marked **live** or **draft**.
    `templates/route.pricing.json` is written to the published theme; the answer's `templateWritten` says so.
 3. `get_theme_catalog` to choose sections, then `get_template` `{"template": "route.pricing.json"}`.
 4. `upsert_section` for each section, with `base_version` from step 3. **draft**
-5. `create_page_preview_link` `{"id": <route id>}` and show the link. (`render_page` answers 404 until the page is
+5. `create_page_preview_link` `{"id": <route id>}` and show the link to the person only (anyone who has it can open
+   the page until it expires; never write it anywhere else). (`render_page` answers 404 until the page is
    published.)
 6. When the person approves: `publish_draft` (the sections), then `set_routes_published` `{"ids": [<id>], "published": true}` (the page). **live**
    Then `render_page` `{"path": "/pricing"}` to confirm.

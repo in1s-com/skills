@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.1 — 2026-11-26
+
+- Preview links (draft and page): anyone who has one can see what it opens until it expires, so the agent gives it to the person
+  in its reply only, never writes it anywhere else, and revokes it once they have looked (both skills; Snyk W007).
+
 ## 1.5.0 — 2026-11-26
 
 - `list_domains` / `check_domain` / `add_domain`: a domain's `oldAddress` (it still points at an old in1s address,

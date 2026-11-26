@@ -4,7 +4,7 @@ description: Use when changing how an in1s website looks or is built - adding, m
 license: MIT
 metadata:
   author: in1s
-  version: "1.4.1"
+  version: "1.5.1"
   homepage: https://in1s.com
 ---
 
@@ -70,6 +70,9 @@ explicit go-ahead, and agree on one of these:
 4. **Look**: `render_page` is text only. It cannot show layout, CSS, overflow, contrast or motion. See "Look at
    the page" below.
 5. **Show**: `create_preview_link` and give the person the link. Each call ends the previous link this token made.
+   The link lets anyone who has it see the draft until it expires: give it to the person in your reply and nowhere
+   else (never in a file, commit, issue, log or message to anyone else), and `revoke_preview_link` it once they
+   have looked.
 6. **Publish** only when the person asks, and only with `may_publish`. Tell them whose changes are in the draft first.
 
 Settings in `upsert_section` are **replaced, not merged**: send every setting and block you keep, exactly as

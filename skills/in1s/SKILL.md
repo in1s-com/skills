@@ -4,7 +4,7 @@ description: Use when the user wants to build, edit, run or connect a website on
 license: MIT
 metadata:
   author: in1s
-  version: "1.5.0"
+  version: "1.5.1"
   homepage: https://in1s.com
 ---
 
@@ -74,7 +74,9 @@ person which permission to grant. Don't look for a way around it.
 | `create_route` / `update_route` page template (`templates/route.{path}.json`) | Published theme | At once (the answer's `templateWritten` says which) |
 | `set_active_theme`, `apply_theme_update`, `restore_snapshot` | Live theme | At once, with no preview |
 
-After a theme change: `render_page` to check it yourself, then `create_preview_link` and **show the link**. Publish,
+After a theme change: `render_page` to check it yourself, then `create_preview_link` and **show the link**. That link
+lets anyone who has it see the draft until it expires: give it to the person in your reply and nowhere else (never in
+a file, commit, issue, log or message to anyone else), and `revoke_preview_link` it once they have looked. Publish,
 discard or restore only when the person asks for that, and only when `may_publish` is true. The draft is shared with
 collaborators and other AI tools, so run `get_draft_status` first and tell the person whose changes the publish
 includes.
