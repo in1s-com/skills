@@ -94,6 +94,9 @@ a public issue.
 - `node scripts/check-tool-map.mjs` (with `IN1S_TOKEN` set to an owner's full-access site token) compares
   `tool-map.md` with the tools the server offers, and fails when the server has a tool the map does not mention.
 - `claude plugin validate --strict .` checks the plugin and marketplace manifests.
+- [scripts/docs-reference/](scripts/docs-reference/README.md) regenerates docs.in1s.com's
+  [MCP reference](https://docs.in1s.com/docs/mcp-reference) from the live server and the platform's code, whenever a
+  tool, a prompt or the server's instructions change.
 - [evals/](evals/README.md) holds the scenarios the skills were tested on.
 
 ## Contributing
