@@ -4,7 +4,7 @@ description: Use when changing how an in1s website looks or is built - adding, m
 license: MIT
 metadata:
   author: in1s
-  version: "1.5.1"
+  version: "1.6.0"
   homepage: https://in1s.com
 ---
 
@@ -217,7 +217,8 @@ These come from `get_liquid_reference`; read its full list for the rest.
 - **Paths go through `route_url`**: `{{ '/contact' | route_url }}`. A literal `href="/contact"` sends visitors of
   another language to the default one.
 - **`data_list.entries` is one page** (`page_size`, 12 unless set). Wrap the loop in
-  `{% paginate data_list.entries by data_list.page_size %}`. `data_lists['handle'].entries` is every entry. Templates,
+  `{% paginate data_list.entries by data_list.page_size %}`. `data_lists['handle'].entries` is the first 50, and
+  `entry.previous` / `entry.next` are the neighbours (never loop a list for them). Templates,
   filters, sorting, entry fields and comments: [references/data-list-templates.md](references/data-list-templates.md).
 - **The engine wraps each section** in `<div id="in1s-section-{id}" class="in1s-section …">` exactly as tall as the
   section, so `position: sticky` goes on the **wrapper**: set the schema's `"class"` and style that class.

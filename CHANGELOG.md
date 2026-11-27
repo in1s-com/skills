@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.0 — 2026-11-27
+
+- Data lists: `data_lists['handle'].entries` holds the first 50 entries (it held every one), so does a multiple reference
+  field and an entry's reverse references off its own page; `{% paginate %}` reaches the rest. New `entry.previous` /
+  `entry.next`, the neighbours in the list's order, instead of looping a list for them (data-list-templates.md,
+  in1s-theme-development; liquid-things SR7).
+
 ## 1.5.3 — 2026-11-26
 
 - Domains: `oldAddressOnWww`, and the exact record to change for an `oldAddress`: the www record to the CNAME, or the

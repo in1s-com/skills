@@ -38,10 +38,19 @@ entry's SEO. The theme does not print them itself.
 |---|---|---|
 | `data_list` on its own listing or entry page | **one page** (`page_size`, the list's `entriesPerPage`, 12 by default) | The listing itself |
 | A section setting of type `data_source` | **one page**, and it follows the page's `?page=`, filter and sort parameters | "Latest posts" on another page |
-| `data_lists['handle']` | **every published entry**, not paged; the page's own filter and sort parameters still apply to it | Small lists you need whole: plans, team, FAQ |
+| `data_lists['handle']` | its **first 50** published entries in the list's own order (`entries_count` is still the true total); the page's own filter and sort parameters still apply to it | Small lists: plans, team, FAQ, "latest 3" |
 
 `{% for entry in data_list.entries limit: 6 %}` slices the current page only; it cannot return more than
-`page_size`. To page any of them: `{% paginate X.entries by N %}`, with N from 1 to 250.
+`page_size`, and `offset:` past 50 on `data_lists['handle']` renders nothing. To page any of them, and to reach entry
+51 onward: `{% paginate X.entries by N %}`, with N from 1 to 250.
+
+**Previous and next entry:** `entry.previous` and `entry.next` are the published entries either side in the list's own
+order (blank at the ends). Use them for "older / newer post" links; never loop a list to find the neighbours.
+
+```liquid
+{%- if entry.previous -%}<a href="{{ entry.previous.url }}">{{ entry.previous.title | escape }}</a>{%- endif -%}
+{%- if entry.next -%}<a href="{{ entry.next.url }}">{{ entry.next.title | escape }}</a>{%- endif -%}
+```
 
 ## The `data_list` object
 
@@ -97,14 +106,14 @@ wins over a field with the same id unless the built-in is blank. `published_at` 
 | video_url | `{{ entry.x \| external_video_tag }}` |
 | select, radio, checkbox_group **labels** | `{{ entry.x \| option_label: entry, 'x' }}` (the stored value is the option's `value`) |
 | reference, single | an entry object, or blank: `entry.author.url`, `entry.author.title` |
-| reference, multiple | a list of entry objects: `{% for post in entry.related %}` |
+| reference, multiple | a list of entry objects, the first 50 in the order set: `{% for post in entry.related %}` |
 | structure | a list of rows: `{% for row in entry.faq %}{{ row.question \| escape }}{% endfor %}` |
 
 **Reverse references:** `entry.referenced_by['<list handle>']` lists the entries of another list that reference this
 one, such as an author's posts.
 
 - **On the entry's own page** it is a full list object, so use `.entries` and `{% paginate %}`.
-- **Anywhere else**, inside a loop for example, it is a plain list of entries.
+- **Anywhere else**, inside a loop for example, it is a plain list of that list's first 50 entries, in its own order.
 
 **Draw every field of any entry** without knowing the schema:
 `{% for field in entry.data_list.fields %}…{% endfor %}`. Shipped themes do this in a `snippets/entry-field.liquid`;
