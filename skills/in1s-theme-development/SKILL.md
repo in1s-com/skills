@@ -4,7 +4,7 @@ description: Use when changing how an in1s website looks or is built - adding, m
 license: MIT
 metadata:
   author: in1s
-  version: "1.6.0"
+  version: "1.7.0"
   homepage: https://in1s.com
 ---
 
@@ -210,6 +210,10 @@ warning your change introduced.
 
 These come from `get_liquid_reference`; read its full list for the rest.
 
+- **Pages are cached for every visitor alike.** A published change shows on the next request. Output that moves with
+  the clock alone (`'now' | date` with minutes, a countdown) can be up to 10 minutes old, and live counts
+  (`form.submissions_count`, the `submissions_*` filters) up to 5 seconds. A visitor with a cart or a session always gets
+  their own page, but never print per-visitor or per-moment values into the HTML for everyone: read them in the browser.
 - **A filter argument takes no filters, and neither does a tag argument.** Use `{% assign %}` first:
   `{% assign handle = section.settings.form | default: 'contact' %}{% form handle %}…{% endform %}`. A filter inside a
   `{% for %}` expression is ignored.

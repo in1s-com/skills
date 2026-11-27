@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0 — 2026-11-28
+
+- Theme development: storefront pages are cached for every visitor alike. A published change shows on the next
+  request; clock-driven output can be up to 10 minutes old and live counts up to 5 seconds; per-visitor values are read
+  in the browser (in1s-theme-development "Engine rules"; liquid-things SR8, the page cache on in production).
+
 ## 1.6.0 — 2026-11-27
 
 - Data lists: `data_lists['handle'].entries` holds the first 50 entries (it held every one), so does a multiple reference
