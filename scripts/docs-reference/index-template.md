@@ -203,6 +203,8 @@ A refusal comes back in one of three ways:
 | Tool error about a conflict or a version | The record changed since it was read | Read it again, then retry |
 | Tool error "Not found." | No record with that id on this website | Check the id with the matching `list_*` tool |
 | Tool error "Too many requests. Try again in N s." | A limit the panel's own action has too (theme writes, imports, webhook tests) | Wait that long |
+| Tool error "The cache was cleared several times just now. Try again in N s." | `purge_page_cache` past 6 a minute for the website, shared with the panel's Clear cache | Wait that long |
+| Tool error "Caching is off for this website, so there is nothing to clear." | `purge_page_cache` while the website's cache, or the platform's, is off | Nothing to do: no page is stored |
 
 ## Limits
 
@@ -210,6 +212,7 @@ A refusal comes back in one of three ways:
 - **Refused sign-ins**: 20 a minute, then 429.
 - **Lists**: up to 100 items a page.
 - **Bulk tools**: up to 100 ids a call; `bulk_set_submission_status` up to 500.
+- **Page cache**: up to 50 pages never cached; `purge_page_cache` 6 a minute per website.
 - **Tokens**: up to 10 live site access tokens per person per website.
 - **Apps**: up to 10 connected apps per person, each reaching up to 100 websites.
 

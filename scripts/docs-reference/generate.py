@@ -32,9 +32,9 @@ ACTION_LABELS = {'view': 'View', 'edit': 'Edit', 'delete': 'Delete', 'code': 'Co
 # Pages: (slug, title, description, intro, [code folder groups]) in the order they are read.
 PAGES = [
     ('mcp-website-and-account', 'MCP: website, settings and history',
-     'The MCP tools for the websites a connection reaches, a new website, the website overview and settings, activity, analytics and version history.',
-     'The tools that start a session and look after the website as a whole: the websites a connection may work on and a new one, the overview, the website settings, the activity log, analytics, and the version history every record keeps.',
-     ['Site', 'Settings', 'Activity', 'Analytics', 'History']),
+     'The MCP tools for the websites a connection reaches, a new website, the website overview and settings, the page cache, activity, analytics and version history.',
+     'The tools that start a session and look after the website as a whole: the websites a connection may work on and a new one, the overview, the website settings, the page cache, the activity log, analytics, and the version history every record keeps.',
+     ['Site', 'Settings', 'Performance', 'Activity', 'Analytics', 'History']),
     ('mcp-content', 'MCP: data lists and entries',
      'The MCP tools for data lists, their entries, URL slugs and search engine settings.',
      'Data lists are the website\'s content collections (posts, products, team, services); entries are their items. These tools make and change both, choose URL slugs, and set what search engines show.',
@@ -204,7 +204,7 @@ for slug, title, description, intro, folder_groups in PAGES:
             'errors and limits are on [MCP reference](/docs/mcp-reference).', '']
     for folder in folder_groups:
         in_group = [n for n in names if perms[n]['group'] == folder]
-        heading = {'Site': 'Websites and the overview', 'Settings': 'Website settings', 'Activity': 'Activity log',
+        heading = {'Site': 'Websites and the overview', 'Settings': 'Website settings', 'Performance': 'Page cache', 'Activity': 'Activity log',
                    'Analytics': 'Analytics', 'History': 'Version history', 'DataLists': 'Data lists',
                    'Entries': 'Entries', 'Slugs': 'URL slugs', 'Seo': 'Search engines', 'Routes': 'Routes (pages)',
                    'Navigation': 'Menus', 'Redirects': 'Redirects', 'SiteFiles': 'Site files', 'Media': 'Media and fonts',
