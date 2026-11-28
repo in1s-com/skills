@@ -2,6 +2,8 @@
 
 [![skills.sh](https://skills.sh/b/in1s-com/skills)](https://skills.sh/in1s-com/skills)
 
+<img src=".github/images/banner.png" alt="in1s skills: your AI agent builds and runs your website. A person asks for an FAQ under the hero with a preview first; the agent adds it to the theme draft and shares a preview before publishing." width="100%">
+
 [in1s](https://in1s.com) is the website platform for AI agents: build with AI, own your website, and manage it with
 ChatGPT, Claude, Cursor, Codex, VS Code or any other agent that speaks MCP.
 
@@ -31,6 +33,10 @@ Each skill keeps its `SKILL.md` short and loads detail from `references/` only w
 The MCP server already tells an agent what each of its tools does. These skills add what the tools cannot say:
 connecting in the first place, which changes go live and which go to the draft, the shortest path for common jobs,
 the value shapes that trip agents up, and what to confirm with a person before acting.
+
+## How it works
+
+<img src=".github/images/how-it-works.png" alt="Three steps: your agent with the in1s skills connects to the in1s MCP server with one sign-in at your access level; on your website, content edits go live at once while theme edits wait in a draft, are previewed, and are published only when you say." width="100%">
 
 ## Install
 
