@@ -9,7 +9,7 @@ The in1s MCP server lets an AI assistant work on your websites through the
 |---|---|
 | Address | `https://accounts.in1s.com/mcp` |
 | Transport | Streamable HTTP: JSON-RPC 2.0 sent with `POST`. `GET` and `DELETE` answer 405. |
-| Protocol versions | `2025-11-25`, `2025-06-18` and `2025-03-26`: the server answers the version the client asks for, or the newest when it asks for another |
+| Protocol versions | `2025-11-25`, `2025-06-18` and `2025-03-26` on `initialize`: the server answers the version the client asks for, or the newest when it asks for another |
 | Server name | `in1s`, version `1.0.0` |
 | Offers | Tools ({{TOTAL}}), prompts (3) and instructions. It also announces the resources capability, but offers no resources. |
 | Sessions | None: every request signs in again with its token, and nothing is kept between requests |
@@ -99,7 +99,7 @@ arguments.
   things, as its description says.
   - **Read-only**: changes nothing. {{READ_COUNT}} tools.
   - **Destructive**: removes or overwrites something. {{DESTRUCTIVE_COUNT}} tools. What a `trash_*` tool removes comes
-    back with the matching `restore_*` (trashed media is deleted for good after 30 days). The `delete_*` tools cannot
+    back with the matching `restore_*` (anything in the trash is deleted for good after 30 days). The `delete_*` tools cannot
     be undone, except `delete_theme_file`, which works in the draft: the file's history brings it back.
   - **Idempotent**: calling it again with the same arguments has no further effect.
   - **Reaches outside in1s**: it fetches from, or sends to, an address outside in1s, as the server marks it. Other
@@ -164,7 +164,7 @@ publish.
 - **Pages of results**: most list tools take `page` (from 1) and `per_page` (1 to 100, 25 by default), and answer
   `items`, `page`, `per_page`, `total` and `next_page` (null on the last page). The exceptions: `list_activity` pages
   with `before` (the `next_before` it answered); `list_placeholders`, `list_site_health_runs` and
-  `list_submission_notes` take `page` only (notes come 50 a page); `list_newsletter_audiences` and
+  `list_submission_notes` take `page` only (notes come 50 a page), and `find_visitor_data` too (25 a page); `list_newsletter_audiences` and
   `list_template_variants` answer everything at once.
 
 ## Answers
@@ -177,7 +177,7 @@ A refusal comes back in one of three ways:
 
 - **A tool error** (`isError: true` in the tool's answer), whose text says why: a wrong argument (named by the
   argument), a record changed since it was read, a record open in the panel's editor, a missing `website`, "Not
-  found.", or "Too many requests. Try again in N s." from a limit the panel's own action has too.
+  found.", or a "Try again" refusal from a limit the panel's own action has too (see Errors).
 - **A JSON-RPC error** (code -32602, no tool ran): a tool your access does not allow, a tool that needs May publish, or
   an account tool called with a token or a narrower connection.
 - **An HTTP error**, before any tool: a bad or missing sign-in (401), a refused website or account (403, or 401 for
@@ -192,7 +192,7 @@ A refusal comes back in one of three ways:
 | HTTP 403 with `error` and `message` (401 for an account that is no longer active) | You are no longer a member, the website is suspended, your membership is paused, your email is not verified, or the owner requires two-step verification | Read the message; it says which |
 | HTTP 403 `website_scheduled_for_deletion` | The website is scheduled for deletion; `list_websites` shows it unavailable | Tell the person: the owner can cancel the deletion in the panel |
 | HTTP 403 "Forbidden: The request origin is not allowed." | The request came from a web page | Use an MCP client |
-| HTTP 429 `too_many_attempts` "Too many failed attempts. Try again in a minute." | 20 refused sign-ins in a minute from one address, token or connection | Wait a minute, then fix the token |
+| HTTP 429 `too_many_attempts` "Too many failed attempts. Try again in a minute." | 20 refused sign-ins in a minute from one address, token or connection, or 20 calls a minute on a website scheduled for deletion | Wait a minute, then fix the token |
 | HTTP 429 | More than 120 requests in a minute from one token or connection | Wait, then slow down |
 | HTTP 400, JSON-RPC -32600 "Send one request at a time: each call names its own website, so a batch is refused." | A connection sent a batch | Send one request per call |
 | JSON-RPC -32602 "Tool [name] is not available to this token: it needs …" | Your access does not allow the tool, or it needs May publish | Ask the person for that access |
@@ -204,7 +204,8 @@ A refusal comes back in one of three ways:
 | Tool error "Not found." | No record with that id on this website | Check the id with the matching `list_*` tool |
 | Tool error "Too many requests. Try again in N s." | A limit the panel's own action has too (theme writes, imports, webhook tests) | Wait that long |
 | Tool error "The cache was cleared several times just now. Try again in N s." | `purge_page_cache` past 6 a minute for the website, shared with the panel's Clear cache | Wait that long |
-| Tool error "Caching is off for this website, so there is nothing to clear." | `purge_page_cache` while the website's cache, or the platform's, is off | Nothing to do: no page is stored |
+| Tool error "page_cache: Caching is off for this website, so there is nothing to clear." | `purge_page_cache` while the website's cache or the platform's is off, or the website is temporary | Nothing to do: no page is stored |
+| Tool error "Too many site health checks. Try again later." | `run_site_health` past its hourly limit for the person, on the website or across their websites, shared with the panel's check | Try again later |
 
 ## Limits
 

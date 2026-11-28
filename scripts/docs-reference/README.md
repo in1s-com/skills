@@ -8,7 +8,7 @@ annotations and permission. Regenerate it whenever a tool, a prompt or the serve
 
 | File | How to get it |
 |---|---|
-| `live-tools.json` | `tools/list` from `https://accounts.in1s.com/mcp` as a **signed-in connection** with **Everything your role allows** (its list carries `website` on every tool but the account tools) |
+| `live-tools.json` | `tools/list` from `https://accounts.in1s.com/mcp` as a **signed-in connection** with **Everything your role allows** (its list carries `website` on every tool but the account tools). Or, as on 28 Nov 2026: a temporary **whole-role site token that may publish** (a token that may not hides the publishing tools), whose list has no `website` (the generator skips it) and no account tools; add those two (`list_websites`, `create_website`) as their classes serialise on production (`app(ListWebsites::class)->toArray()`), then revoke the token |
 | `live-prompts.json` | `prompts/list` from the same connection |
 | `live-init.json` | `initialize` from the same connection (the instructions) |
 | `perms.json` | From the application's root: `OUT=<working folder>/perms.json php <this repo>/scripts/docs-reference/extract-permissions.php` |
