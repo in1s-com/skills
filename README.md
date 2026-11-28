@@ -2,8 +2,10 @@
 
 [![skills.sh](https://skills.sh/b/in1s-com/skills)](https://skills.sh/in1s-com/skills)
 
-Agent Skills for building and running websites on [in1s](https://in1s.com) with an AI agent, through the in1s MCP
-server.
+[in1s](https://in1s.com) is the website platform for AI agents: build with AI, own your website, and manage it with
+ChatGPT, Claude, Cursor, Codex, VS Code or any other agent that speaks MCP.
+
+These are the Agent Skills for building and running websites on in1s with an AI agent, through the in1s MCP server.
 
 They work in Claude Code, Claude Desktop, claude.ai, Codex, Cursor, VS Code and any other client that reads
 [Agent Skills](https://agentskills.io).
