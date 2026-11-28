@@ -148,6 +148,7 @@ may publish · **irreversible** = cannot be undone from in1s.
 | `get_tracking_codes` / `update_tracking_codes` | GA4, GTM, Meta Pixel; the update sets all three together. Update is **live, gated**. |
 | `get_custom_code` / `update_custom_code` | HTML in head/body on every page; the update sets all four places together. Update is **live, gated**. |
 | `get_cookie_consent` / `update_cookie_consent` | Consent banner. **live** |
+| `get_page_cache` / `update_page_cache` / `purge_page_cache` | Page cache: on or off, pages never cached, the last 30 days' figures, clear it. **live** |
 | `get_chat_button` / `update_chat_button` | Chat button (WhatsApp, phone, email, Telegram, Messenger); send every argument back. **live** |
 | `list_popups` / `get_popup` / `get_popup_stats` / `create_popup` / `update_popup` / `duplicate_popup` / `enable_popup` / `disable_popup` / `trash_popup` / `restore_popup` | Popups and bars. |
 | `get_newsletter_settings` / `update_newsletter_settings` / `list_newsletter_subscribers` / `get_newsletter_subscriber` / `add_newsletter_subscriber` / `set_newsletter_subscriber_status` / `resend_newsletter_confirmation` | Newsletter; adding always sends a confirmation email. |

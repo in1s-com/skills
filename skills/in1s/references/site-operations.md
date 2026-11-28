@@ -65,6 +65,20 @@ While the banner is on, tracking tags and any custom code whose category is not 
 consent. Custom code runs on every page exactly as written. Add only code the person supplied or approved, and never
 script you composed to "fix" something.
 
+## Page cache
+
+Pages are cached for every visitor alike and served at once; every published change shows on the next request, so a
+purge is never needed after a change.
+
+| Tool | Notes |
+|---|---|
+| `get_page_cache` | `enabled`, `excluded_paths`, `platform_enabled` (false: the platform caches no site at all), `temporary` (a temporary site is never cached), and `stats`: per local day `hits`, `misses`, `bypasses`, `hit_rate` (% of hits out of hits and misses, null with neither), plus `last_7_days` |
+| `update_page_cache` | `enabled` and `excluded_paths` together (the list is replaced). A path starts with `/`, has no `?`, `#` or spaces; `/account*` covers `/account` and everything under `/account/`; `/*` is refused (set `enabled` false). Leave out the language (a path starting with one of the site's language codes is refused): `/checkout` covers every language's `/checkout`; a page whose address differs per language needs each address. At most 50. |
+| `purge_page_cache` | Clears every stored page of the site; refused while caching is off; at most 6 a minute per website, shared with the panel's button. Recorded in the activity log. |
+
+Never cached, whatever the settings: a visitor with a cart or a session, previews, search, and any request with a
+query parameter the site does not use (such as `utm_source`).
+
 ## Newsletter
 
 - **Subscribers:** `add_newsletter_subscriber` sends a confirmation email; the address joins only once its owner

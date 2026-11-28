@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0 — 2026-11-28
+
+- Page cache: `get_page_cache`, `update_page_cache` and `purge_page_cache` (on or off, pages never cached, the last 30
+  days' figures, clear it; at most 6 purges a minute per website, refused while caching is off) in the tool map, the
+  site operations reference and the Errors table. An excluded path is written without the language prefix:
+  `/checkout` covers every language's `/checkout` (in1s; liquid-things SR10).
+
 ## 1.7.0 — 2026-11-28
 
 - Theme development: storefront pages are cached for every visitor alike. A published change shows on the next

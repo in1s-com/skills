@@ -4,7 +4,7 @@ description: Use when the user wants to build, edit, run or connect a website on
 license: MIT
 metadata:
   author: in1s
-  version: "1.5.3"
+  version: "1.6.0"
   homepage: https://in1s.com
 ---
 
@@ -170,6 +170,7 @@ never in a loop. Site health checks run one at a time, about 6 an hour per websi
 | Refused, names an editor and a time | Someone has it open in the panel | Tell the person; try after that time |
 | Publish refused: `changedUnderneath` | The live file changed after the draft edit | `read_theme_file` with `view: "published"`, merge, `write_theme_file` with that `versionId` |
 | HTTP 429 | 120 requests a minute per token or connection | Slow down and batch |
+| "The cache was cleared several times just now. Try again in N s." from `purge_page_cache` | At most 6 a minute per website | Wait a minute; a purge is never needed after a change |
 | `unavailable` on a website | Plan paused, suspended, scheduled for deletion, or access ended | Report the reason; don't retry |
 | HTTP 403 `website_scheduled_for_deletion` | The website is being deleted (its owner can still cancel that in the panel) | Tell the person; don't retry |
 | A tool behaves differently from its description, or a tool you read about is missing | The client loaded the tool list when it connected; the server has changed since | Ask the person to reconnect (Claude Code: `/mcp` → in1s → Reconnect), then read the tool again |
